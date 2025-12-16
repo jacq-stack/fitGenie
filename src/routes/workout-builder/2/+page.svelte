@@ -64,7 +64,8 @@
 					</div>
 					<h2 class="text-xl font-bold leading-tight tracking-tight">FitGenie</h2>
 				</div>
-				<button
+				<a
+					href="/"
 					class="group flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-colors hover:bg-black/5 dark:hover:bg-white/10 text-muted-light dark:text-muted-dark hover:text-text-main dark:hover:text-text-light"
 				>
 					<span>Skip</span>
@@ -72,7 +73,7 @@
 						class="material-symbols-outlined text-lg transition-transform group-hover:translate-x-0.5"
 						>arrow_forward</span
 					>
-				</button>
+				</a>
 			</header>
 			<!-- Main Content -->
 			<main class="flex flex-1 flex-col items-center justify-center px-4 py-8 md:px-10">
@@ -83,18 +84,18 @@
 							<div class="flex flex-col">
 								<span
 									class="text-xs font-bold uppercase tracking-wider text-muted-light dark:text-muted-dark"
-									>Step 1 of 6</span
+									>Step 2 of 6</span
 								>
 								<span class="text-sm font-medium text-text-main dark:text-text-light"
-									>Fitness level</span
+									>Primary goal</span
 								>
 							</div>
-							<span class="text-sm font-bold text-text-main dark:text-text-light">17%</span>
+							<span class="text-sm font-bold text-text-main dark:text-text-light">33%</span>
 						</div>
 						<div
 							class="h-2 w-full overflow-hidden rounded-full bg-border-light dark:bg-border-dark"
 						>
-							<div class="h-full w-[16.666%] rounded-full bg-primary"></div>
+							<div class="h-full w-[33.333%] rounded-full bg-primary"></div>
 						</div>
 					</div>
 					<!-- Question Section -->
@@ -102,17 +103,16 @@
 						<h1
 							class="text-3xl font-black leading-tight tracking-tight text-text-main dark:text-text-light md:text-4xl lg:text-5xl"
 						>
-							What is your current fitness level?
+							What is your primary fitness goal?
 						</h1>
 						<p class="text-lg font-normal leading-relaxed text-muted-light dark:text-muted-dark">
-							This helps us tailor the intensity of your initial program to ensure you start strong
-							but safe.
+							This helps us choose the right balance of strength, hypertrophy, mobility, and recovery.
 						</p>
 					</div>
 					<!-- Input Section -->
 					<div class="flex flex-col gap-6">
 						<div class="relative group">
-							<label class="sr-only" for="fitness-level">Your fitness level response</label>
+							<label class="sr-only" for="primary-goal">Your primary goal response</label>
 							<div
 								class="absolute right-4 top-4 z-10 text-muted-light/50 dark:text-muted-dark/50 group-focus-within:text-primary transition-colors"
 							>
@@ -120,26 +120,28 @@
 							</div>
 							<textarea
 								class="min-h-[200px] w-full resize-none rounded-lg border-2 border-border-light bg-surface-light p-6 text-lg leading-relaxed text-text-main shadow-sm outline-none transition-all placeholder:text-muted-light/60 focus:border-primary focus:ring-4 focus:ring-primary/10 dark:border-border-dark dark:bg-surface-dark dark:text-text-light dark:placeholder:text-muted-dark/50"
-								id="fitness-level"
-								placeholder="- I’m new to resistance training.
-- I have some experience but want to improve.
-- I’m experienced and looking for advanced workouts."
+								id="primary-goal"
+								placeholder="- Lose fat and gain muscle.
+- Improve strength and endurance.
+- Recover from an injury or manage pain (e.g., back pain, leg injury).
+- Improve flexibility and mobility.
+- General fitness and health."
 							></textarea>
 							<p class="mt-3 text-sm text-muted-light dark:text-muted-dark px-2">
 								<span class="material-symbols-outlined align-middle text-base mr-1">info</span>
-								Be as descriptive as you like. Our AI will analyze your response.
+								Pick one option (or describe your goal in your own words).
 							</p>
 						</div>
 						<!-- Action Buttons -->
 						<div class="flex flex-col items-center justify-between gap-4 pt-4 sm:flex-row">
 							<a
-								href="/"
+								href="/workout-builder/1"
 								class="w-full sm:w-auto text-sm font-bold text-muted-light dark:text-muted-dark hover:text-text-main dark:hover:text-text-light transition-colors py-3 px-6 rounded-full text-center"
 							>
 								Back
 							</a>
 							<a
-								href="/workout-builder/2"
+								href="/workout-builder/3"
 								class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-bold tracking-wide text-[#181811] shadow-lg shadow-primary/20 transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:min-w-[200px]"
 							>
 								<span>Next Step</span>
