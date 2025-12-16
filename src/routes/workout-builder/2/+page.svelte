@@ -135,12 +135,14 @@
 						<!-- Action Buttons -->
 						<div class="flex flex-col items-center justify-between gap-4 pt-4 sm:flex-row">
 							<a
+								id="back-step"
 								href="/workout-builder/1"
 								class="w-full sm:w-auto text-sm font-bold text-muted-light dark:text-muted-dark hover:text-text-main dark:hover:text-text-light transition-colors py-3 px-6 rounded-full text-center"
 							>
 								Back
 							</a>
 							<a
+								id="next-step"
 								href="/workout-builder/3"
 								class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-bold tracking-wide text-[#181811] shadow-lg shadow-primary/20 transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:min-w-[200px]"
 							>
@@ -159,11 +161,20 @@
 				class="pointer-events-none fixed -left-40 top-20 h-72 w-72 rounded-full bg-primary/5 blur-3xl dark:bg-primary/5"
 			></div>
 		</div>
+		<script src="/workout-builder/storage.js"></script>
 		<script>
 			// Simple dark mode toggle based on system preference (optional enhancement)
 			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 				document.documentElement.classList.add('dark');
 			}
+
+			window.fitgenieWorkoutBuilderStorage?.bindTextarea({
+				textareaId: 'primary-goal',
+				responseKey: 'primaryGoal',
+				questionText: 'What is your primary fitness goal?',
+				stepNumber: 2,
+				saveOnIds: ['next-step']
+			});
 		</script>
 	</body></html
 >
