@@ -3,50 +3,50 @@ import { OPENAI_API_KEY } from '$env/static/private';
 
 // Initialize OpenAI client
 export const openai = new OpenAI({
-	apiKey: OPENAI_API_KEY
+  apiKey: OPENAI_API_KEY
 });
 
 // Types for user responses
 export interface OnboardingResponse {
-	step: number;
-	question: string;
-	answer: string;
+  step: number;
+  question: string;
+  answer: string;
 }
 
 export interface OnboardingResponses {
-	fitnessLevel?: OnboardingResponse;
-	primaryGoal?: OnboardingResponse;
-	limitations?: OnboardingResponse;
-	trainingDaysPerWeek?: OnboardingResponse;
-	equipmentAccess?: OnboardingResponse;
-	routinePreference?: OnboardingResponse;
+  fitnessLevel?: OnboardingResponse;
+  primaryGoal?: OnboardingResponse;
+  limitations?: OnboardingResponse;
+  trainingDaysPerWeek?: OnboardingResponse;
+  equipmentAccess?: OnboardingResponse;
+  routinePreference?: OnboardingResponse;
 }
 
 export interface UserOnboardingData {
-	updatedAt: string;
-	responses: OnboardingResponses;
+  updatedAt: string;
+  responses: OnboardingResponses;
 }
 
 // Types for workout plan
 export interface Exercise {
-	name: string;
-	sets: number;
-	reps: number;
-	rir: string;
-	notes: string;
+  name: string;
+  sets: number;
+  reps: number;
+  rir: string;
+  notes: string;
 }
 
 export interface Phase {
-	phase: string;
-	goal: string;
-	frequency: string;
-	exercises: Exercise[];
-	progression: string;
+  phase: string;
+  goal: string;
+  frequency: string;
+  exercises: Exercise[];
+  progression: string;
 }
 
 export interface WorkoutPlan {
-	group: string;
-	phases: Phase[];
+  group: string;
+  phases: Phase[];
 }
 
 // System prompt for workout generation
@@ -186,36 +186,61 @@ Include exercises from the following categories:
  * Generate a personalized workout plan using GPT-4o-mini
  */
 export async function generateWorkoutPlan(
-	userOnboardingData: UserOnboardingData
+  userOnboardingData: UserOnboardingData
 ): Promise<WorkoutPlan> {
-	try {
-		const completion = await openai.chat.completions.create({
-			model: 'gpt-4o-mini',
-			messages: [
-				{
-					role: 'system',
-					content: WORKOUT_GENERATION_PROMPT
-				},
-				{
-					role: 'user',
-					content: `Generate a personalized workout plan based on the following user responses:\n\n${JSON.stringify(userOnboardingData, null, 2)}`
-				}
-			],
-			response_format: { type: 'json_object' },
-			temperature: 0.7,
-			max_tokens: 2000
-		});
+  console.log('\n=== Starting Workout Generation ===');
+  console.log('User Onboarding Data:', JSON.stringify(userOnboardingData, null, 2));
 
-		const content = completion.choices[0]?.message?.content;
-		
-		if (!content) {
-			throw new Error('No response from OpenAI');
-		}
+  try {
+    console.log('\n📞 Calling OpenAI API with model: gpt-5-mini');
+    const startTime = Date.now();
 
-		const workoutPlan: WorkoutPlan = JSON.parse(content);
-		return workoutPlan;
-	} catch (error) {
-		console.error('Error generating workout plan:', error);
-		throw new Error('Failed to generate workout plan');
-	}
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-5-mini',
+      messages: [
+        {
+          role: 'system',
+          content: WORKOUT_GENERATION_PROMPT
+        },
+        {
+          role: 'user',
+          content: `Generate a personalized workout plan based on the following user responses:\n\n${JSON.stringify(userOnboardingData, null, 2)}`
+        }
+      ],
+      response_format: { type: 'json_object' }
+    });
+
+    const elapsedTime = Date.now() - startTime;
+    console.log(`\n✅ OpenAI API response received in ${elapsedTime}ms`);
+    console.log('Tokens used:', {
+      prompt: completion.usage?.prompt_tokens,
+      completion: completion.usage?.completion_tokens,
+      total: completion.usage?.total_tokens
+    });
+
+    const content = completion.choices[0]?.message?.content;
+
+    if (!content) {
+      console.error('❌ No content in OpenAI response');
+      throw new Error('No response from OpenAI');
+    }
+
+    console.log('\n📝 Raw OpenAI Response:');
+    console.log(content);
+
+    const workoutPlan: WorkoutPlan = JSON.parse(content);
+
+    console.log('\n🏋️ Generated Workout Plan:');
+    console.log(JSON.stringify(workoutPlan, null, 2));
+    console.log('\n=== Workout Generation Complete ===\n');
+
+    return workoutPlan;
+  } catch (error) {
+    console.error('\n❌ Error generating workout plan:', error);
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
+    throw new Error('Failed to generate workout plan');
+  }
 }

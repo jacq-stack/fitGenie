@@ -1,5 +1,5 @@
 (function () {
-	const STORAGE_KEY = 'fitgenie.workout_builder.v1';
+	const COOKIE_NAME = 'fitgenie_user_responses';
 
 	const safeParse = (value) => {
 		try {
@@ -9,10 +9,21 @@
 		}
 	};
 
+	// Helper to get cookie value
+	const getCookie = (name) => {
+		const value = `; ${document.cookie}`;
+		const parts = value.split(`; ${name}=`);
+		if (parts.length === 2) {
+			return parts.pop().split(';').shift();
+		}
+		return null;
+	};
+
 	const readState = () => {
 		try {
-			const raw = localStorage.getItem(STORAGE_KEY);
-			return safeParse(raw ?? '{}') ?? {};
+			const cookieValue = getCookie(COOKIE_NAME);
+			if (!cookieValue) return {};
+			return safeParse(decodeURIComponent(cookieValue)) ?? {};
 		} catch {
 			return {};
 		}
@@ -20,9 +31,10 @@
 
 	const writeState = (next) => {
 		try {
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+			// Save to cookie (7 days expiry)
+			document.cookie = `${COOKIE_NAME}=${encodeURIComponent(JSON.stringify(next))}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
 		} catch {
-			// Ignore storage failures (e.g., private browsing / quota / disabled)
+			// Ignore storage failures
 		}
 	};
 
@@ -50,7 +62,8 @@
 
 	const clear = () => {
 		try {
-			localStorage.removeItem(STORAGE_KEY);
+			// Clear cookie by setting max-age to 0
+			document.cookie = `${COOKIE_NAME}=; path=/; max-age=0`;
 		} catch {
 			// ignore
 		}
@@ -85,7 +98,7 @@
 	};
 
 	window.fitgenieWorkoutBuilderStorage = {
-		STORAGE_KEY,
+		COOKIE_NAME,
 		readState,
 		setResponse,
 		getResponse,

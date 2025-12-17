@@ -57,7 +57,7 @@
 							class="relative w-full aspect-[4/3] bg-gray-200 dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl rotate-1 hover:rotate-0 transition-all duration-500 ease-out"
 							data-alt="Black and white photo of heavy dumbbells on a rack in a modern gym"
 							role="img"
-							style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAbVkS9gZtw1g2hnLQzoXWtWs_vpL-N2vsgO2oReElYwevAQy5V0mdPHDeNjbF3jAR1PE-cwM95u852A3xF4ClushoHrwKtPd96TGjOAljb9ErissDrXEwePcbT7OEIK8V-KlUABxYU5ZYIH63RmCpKvGXnT2NdpuNMMEKc2oBs4PrJQra0zazSUBTcCevhHt6cPaOdn_xBNz78BPXMXWE1c04k66DBT-gJ9H3t-NCemfQqONc5qP3syK-3orUpEPdTWh3EfKqV'); background-size: cover; background-position: center; filter: grayscale(100%);"
+							style="background-image: url('/images/workout.png'); background-size: cover; background-position: center; filter: grayscale(100%);"
 						>
 							<div class="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent"></div>
 						</div>

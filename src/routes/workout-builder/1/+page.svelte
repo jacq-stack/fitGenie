@@ -1,59 +1,33 @@
-<!DOCTYPE html>
+<script lang="ts">
+  import { onMount } from 'svelte';
 
-<html class="light" lang="en"
-	><head>
-		<meta charset="utf-8" />
-		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-		<title>FitGenie Onboarding</title>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-			rel="stylesheet"
-		/>
-		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-		<script id="tailwind-config">
-			tailwind.config = {
-				darkMode: 'class',
-				theme: {
-					extend: {
-						colors: {
-							primary: '#f9f506',
-							'background-light': '#f8f8f5',
-							'background-dark': '#23220f',
-							'surface-light': '#ffffff',
-							'surface-dark': '#2d2c1b',
-							'text-main': '#181811',
-							'text-light': '#f2f2e6',
-							'border-light': '#e6e6db',
-							'border-dark': '#454430',
-							'muted-light': '#8c8b5f',
-							'muted-dark': '#a0a090'
-						},
-						fontFamily: {
-							display: ['Spline Sans', 'sans-serif']
-						},
-						borderRadius: {
-							DEFAULT: '1rem',
-							lg: '2rem',
-							xl: '3rem',
-							full: '9999px'
-						}
-					}
-				}
-			};
-		</script>
-	</head>
-	<body
-		class="bg-background-light dark:bg-background-dark text-text-main dark:text-text-light font-display antialiased transition-colors duration-200"
-	>
-		<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+  onMount(async () => {
+    // Optional enhancement: apply dark mode based on system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Bind textarea persistence using the global provided by /static script (loaded via route layout)
+    try {
+      (window as any).fitgenieWorkoutBuilderStorage?.bindTextarea({
+        textareaId: 'fitness-level',
+        responseKey: 'fitnessLevel',
+        questionText: 'What is your current fitness level?',
+        stepNumber: 1,
+        saveOnIds: ['next-step']
+      });
+    } catch (e) {
+      console.error('Failed to initialize workout builder storage binding:', e);
+    }
+  });
+</script>
+
+<svelte:head>
+  <title>FitGenie Onboarding</title>
+</svelte:head>
+
+<div class="bg-background-light dark:bg-background-dark text-text-main dark:text-text-light font-display antialiased transition-colors duration-200">
+  <div class="relative flex min-h-screen flex-col overflow-x-hidden">
 			<!-- Header -->
 			<header class="flex items-center justify-between px-6 py-5 md:px-10 lg:px-40">
 				<div class="flex items-center gap-3">
@@ -158,21 +132,5 @@
 			<div
 				class="pointer-events-none fixed -left-40 top-20 h-72 w-72 rounded-full bg-primary/5 blur-3xl dark:bg-primary/5"
 			></div>
-		</div>
-		<script src="/workout-builder/storage.js"></script>
-		<script>
-			// Simple dark mode toggle based on system preference (optional enhancement)
-			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-				document.documentElement.classList.add('dark');
-			}
-
-			window.fitgenieWorkoutBuilderStorage?.bindTextarea({
-				textareaId: 'fitness-level',
-				responseKey: 'fitnessLevel',
-				questionText: 'What is your current fitness level?',
-				stepNumber: 1,
-				saveOnIds: ['next-step']
-			});
-		</script>
-	</body></html
->
+  </div>
+</div>
