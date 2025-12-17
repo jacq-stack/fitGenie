@@ -12,8 +12,7 @@
 	const statusMessages = [
 		'Analyzing your responses...',
 		'Processing your fitness profile...',
-		'Crafting your personalized plan...',
-		'Finalizing your workout...'
+		'Crafting your personalized plan...'
 	];
 
 	let currentMessageIndex = 0;
