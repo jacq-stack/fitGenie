@@ -1,9 +1,9 @@
 import OpenAI from 'openai';
-import { OPENAI_API_KEY } from '$env/dynamic/private';
+import { env } from '$env/dynamic/private';
 
 // Initialize OpenAI client
 export const openai = new OpenAI({
-  apiKey: OPENAI_API_KEY
+  apiKey: env.OPENAI_API_KEY
 });
 
 // Types for user responses
