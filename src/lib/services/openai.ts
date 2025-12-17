@@ -180,11 +180,12 @@ Include exercises from the following categories:
 - Do not include any markdown formatting or code blocks
 - Ensure all exercises are appropriate for the user's fitness level, equipment access, and any limitations
 - Consider the user's primary goal when designing the workout plan
-- Match the training frequency to the user's commitment level`;
+- Match the training frequency to the user's commitment level
+- Select only one exercise per category and do not provide alternative options.
+- Use a fixed frequency for the workout plan.
+`;
 
-/**
- * Generate a personalized workout plan using GPT-4o-mini
- */
+
 export async function generateWorkoutPlan(
   userOnboardingData: UserOnboardingData
 ): Promise<WorkoutPlan> {
